@@ -1,6 +1,6 @@
-# IA Agent
+# local-chatbot
 
-![IA Agent demo](./demo_ia-agent.png)
+![local-chatbot demo](./demo_ia-agent.png)
 
 A chat app to interact with local models via an ollama api.
 
