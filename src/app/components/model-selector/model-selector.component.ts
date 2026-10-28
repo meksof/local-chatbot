@@ -6,19 +6,22 @@ import { ConversationService } from '../../services/conversation.service';
   imports: [],
   template: `
     <div class="flex items-center gap-2">
-      <label class="text-sm font-medium text-gray-600">Model:</label>
+      <label class="text-caption-sm font-medium text-mute">Model</label>
       <select
         [value]="selectedModel()"
         (change)="onModelChange($event)"
         [disabled]="disabled()"
-        class="px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+        class="px-3 py-1.5 h-8 border border-hairline rounded-full bg-canvas text-ink text-body-sm
+               focus:outline-none focus:ring-2 focus:ring-focus-ring focus:border-ink
+               disabled:bg-surface-soft disabled:text-mute disabled:cursor-not-allowed
+               transition-colors"
       >
         @for (model of conversationService.models(); track model.name) {
           <option [value]="model.name">{{ model.name }}</option>
         }
       </select>
       @if (disabled()) {
-        <span class="text-xs text-gray-400">(locked after first message)</span>
+        <span class="text-caption-sm text-mute">locked</span>
       }
     </div>
   `,
@@ -27,7 +30,7 @@ import { ConversationService } from '../../services/conversation.service';
 export class ModelSelectorComponent {
   selectedModel = input<string>('');
   disabled = input<boolean>(false);
-  
+
   conversationService = inject(ConversationService);
 
   onModelChange(event: Event): void {

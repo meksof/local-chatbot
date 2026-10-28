@@ -13,10 +13,12 @@ import { ToastService, Toast } from '../../services/toast.service';
       @for (toast of toastService.toasts(); track toast.id) {
         <div
           role="alert"
-          class="flex items-start gap-3 min-w-72 max-w-sm rounded-lg px-4 py-3 shadow-lg pointer-events-auto transition-all duration-300"
-          [class]="toastClasses(toast)"
+          class="flex items-start gap-3 min-w-72 max-w-sm rounded-ds-lg px-4 py-3
+                 bg-surface-dark text-on-dark pointer-events-auto
+                 transition-all duration-300"
         >
-          <span class="mt-0.5 shrink-0">
+          <!-- Severity icon — color distinguishes type, not the background -->
+          <span class="mt-0.5 shrink-0" [class]="iconColor(toast)">
             @switch (toast.type) {
               @case ('error') {
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -43,10 +45,12 @@ import { ToastService, Toast } from '../../services/toast.service';
               }
             }
           </span>
-          <p class="flex-1 text-sm font-medium">{{ toast.message }}</p>
+
+          <p class="flex-1 text-body-sm font-medium text-on-dark">{{ toast.message }}</p>
+
           <button
             type="button"
-            class="ml-2 shrink-0 opacity-70 hover:opacity-100 transition-opacity"
+            class="ml-2 shrink-0 text-on-dark-mute hover:text-on-dark transition-opacity"
             [attr.aria-label]="'Dismiss notification'"
             (click)="toastService.dismiss(toast.id)"
           >
@@ -62,14 +66,13 @@ import { ToastService, Toast } from '../../services/toast.service';
 export class ToastComponent {
   readonly toastService = inject(ToastService);
 
-  toastClasses(toast: Toast): string {
-    const base = 'flex items-start gap-3 min-w-72 max-w-sm rounded-lg px-4 py-3 shadow-lg pointer-events-auto transition-all duration-300';
+  /** Icon color reflects severity; the card background stays surface-dark for all types. */
+  iconColor(toast: Toast): string {
     switch (toast.type) {
-      case 'error':   return `${base} bg-red-600 text-white`;
-      case 'warning': return `${base} bg-yellow-500 text-white`;
-      case 'success': return `${base} bg-green-600 text-white`;
-      case 'info':    return `${base} bg-blue-600 text-white`;
-      default:        return `${base} bg-gray-800 text-white`;
+      case 'error':   return 'text-terminal-red';
+      case 'warning': return 'text-terminal-yellow';
+      case 'success': return 'text-terminal-green';
+      default:        return 'text-on-dark-mute';
     }
   }
 }

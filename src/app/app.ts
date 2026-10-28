@@ -9,40 +9,39 @@ import { ToastComponent } from './components/toast/toast.component';
   selector: 'app-root',
   imports: [SidebarComponent, ChatComponent, BottomNavComponent, ToastComponent],
   template: `
-    <div class="flex h-screen bg-gray-100">
-      <!-- Sidebar - Desktop -->
-      <aside class="hidden md:block w-64 border-r bg-gray-900">
+    <div class="flex h-screen bg-canvas">
+      <!-- Desktop sidebar — always visible ≥md -->
+      <aside class="hidden md:block w-64 border-r border-hairline shrink-0">
         <app-sidebar />
       </aside>
-      
-      <!-- Sidebar - Mobile -->
-      <aside 
-        class="fixed inset-0 z-40 bg-black/50 md:hidden transition-opacity"
-        [class.hidden]="conversationService.mobileView() !== 'sidebar'"
-        [class.opacity-0]="conversationService.mobileView() !== 'sidebar'"
-        [class.pointer-events-none]="conversationService.mobileView() !== 'sidebar'"
-        (click)="closeSidebar()"
-      >
-        <div 
-          class="w-72 h-full bg-gray-900"
-          (click)="$event.stopPropagation()"
+
+      <!-- Mobile sidebar — overlay drawer, <md only -->
+      @if (conversationService.mobileView() === 'sidebar') {
+        <aside
+          class="fixed inset-0 z-40 bg-black/40 md:hidden"
+          (click)="closeSidebar()"
         >
-          <app-sidebar />
-        </div>
-      </aside>
-      
-      <!-- Main Content -->
+          <div
+            class="w-72 h-full"
+            (click)="$event.stopPropagation()"
+          >
+            <app-sidebar />
+          </div>
+        </aside>
+      }
+
+      <!-- Main content area -->
       <main class="flex-1 flex flex-col overflow-hidden">
-        <div class="flex-1 overflow-y-auto pb-16 md:pb-0">
+        <div class="flex-1 overflow-y-auto pb-14 md:pb-0">
           <app-chat />
         </div>
       </main>
-      
-      <!-- Bottom Navigation - Mobile -->
+
+      <!-- Mobile bottom navigation -->
       <app-bottom-nav />
     </div>
 
-    <!-- Toast notifications -->
+    <!-- Toast notification overlay -->
     <app-toast />
   `,
   styles: ``

@@ -4,33 +4,42 @@ Content-Type: application/json
 Connection: keep-alive
 
 {
-  "model": "ds-v2:latest",
+  "model": "qwen3:8b",
   "stream": false,
   "prompt": "What is your model name and version ?"
 }
 
 HTTP/1.1 200  - OK
 content-type: application/json; charset=utf-8
-date: Tue, 28 Jul 2026 11:26:12 GMT
-content-length: 1028
+date: Sun, 18 Oct 2026 14:26:03 GMT
+content-length: 53
 ###
 # list all models
 GET http://localhost:11434/api/tags
-
-HTTP/1.1 200  - OK
-content-type: application/json; charset=utf-8
-date: Wed, 29 Jul 2026 13:16:12 GMT
-connection: close
-transfer-encoding: chunked
 ###
 # list running models
 GET http://localhost:11434/api/ps
 
 HTTP/1.1 200  - OK
 content-type: application/json; charset=utf-8
-date: Tue, 28 Jul 2026 09:29:51 GMT
+date: Mon, 12 Oct 2026 14:21:31 GMT
 content-length: 13
 connection: close
+###
+# show model details
+# @name showModel
+POST http://localhost:11434/api/show
+Content-Type: application/json
+
+{
+    "model": "qwen3:8b"
+}
+###
+# show result.capabilities
+@capabilities = {{showModel.response.body.$.capabilities}}
+
+# print capabilities
+{{capabilities}}
 ###
 # Bad request
 POST http://localhost:11434/api/generate
