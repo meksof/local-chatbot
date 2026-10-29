@@ -46,6 +46,26 @@ The design system's `surface-dark` surface is documented as a single "look here"
 
 Every button, text input, select, and icon button uses `rounded-full` (9999 px). Cards and container surfaces use `rounded-ds-lg` (12 px). Nothing interactive has a sharp corner. This is a hard rule from the design system ("Don't soften pills or sharpen cards").
 
+#### Message bubbles in the conversation area
+
+Message bubbles are the one place in the UI where corner radius and horizontal padding are intentionally **not** hardcoded to a fixed Tailwind token. Instead, they are driven by two CSS custom properties injected into `:root` via a Tailwind plugin in `tailwind.config.js`:
+
+| CSS variable | Value | Computed | Role |
+|---|---|---|---|
+| `--user-message-rounded` | `calc(.25rem * 5.5)` | `22px` | Border radius for all message bubbles |
+| `--user-message-spacing` | `calc(.25rem * 4)` | `16px` | Horizontal padding inside all message bubbles |
+
+These are consumed in the chat template using Tailwind's arbitrary-value syntax:
+
+```html
+<div class="rounded-[var(--user-message-rounded)] px-[var(--user-message-spacing)] …">
+```
+
+Both the user bubble (`bg-ink text-on-primary`) and the assistant bubble (`bg-surface-soft text-ink`) share the same corner and spacing variables — only the surface and text colour differ.
+
+**Why CSS variables instead of a static token?**  
+The `22px` radius sits between the design system's two defined card values (`ds-sm` 6px, `ds-md` 8px, `ds-lg` 12px) and the pill extreme (`rounded-full`). Message bubbles need a softer, chat-native corner that feels conversational without collapsing to a full pill. Exposing this as a CSS variable rather than a one-off arbitrary value means the radius can be tuned globally (e.g. at a breakpoint or via a theme switch) without touching every template. To adjust the bubble shape across the entire app, update `--user-message-rounded` in `tailwind.config.js`'s `addBase` plugin block.
+
 ### 5. Typography: Nunito + system-ui + ui-monospace
 
 SF Pro Rounded (the design system's heading face) is Apple-licensed and unavailable on Linux/Windows. **Nunito** (Google Fonts, weights 500 and 600) is the closest open-source equivalent — same rounded geometric terminals, identical weight range. It is loaded via a `<link>` in `index.html` as the first entry in the `font-display` family stack, with `SF Pro Rounded` and `system-ui` as fallbacks.

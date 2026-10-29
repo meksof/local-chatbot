@@ -6,7 +6,7 @@ The app will have the following features:
 - [x] Support for multiple models and model switching
 - [ ] Support for web search and fetching relevant pages from the web. see `docs/features/web-search.md` for more details.
 
-## Rules
+## General rules
 
 - Build a context message, which includes the conversation history and the current user input, and send it to the local model via the ollama api.
 - An input to select the model to use on each conversation.
