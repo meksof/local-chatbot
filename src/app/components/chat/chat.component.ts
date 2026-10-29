@@ -48,13 +48,11 @@ import { ModelsNoticeComponent } from '../models-notice/models-notice.component'
                 [class.justify-start]="message.role === 'assistant'"
               >
                 <div
-                  class="max-w-[80%] px-4 py-2"
+                  class="max-w-[80%] px-[var(--user-message-spacing)] py-2.5 rounded-[var(--user-message-rounded)]"
                   [class.bg-ink]="message.role === 'user'"
                   [class.text-on-primary]="message.role === 'user'"
-                  [class.rounded-full]="message.role === 'user'"
                   [class.bg-surface-soft]="message.role === 'assistant'"
                   [class.text-ink]="message.role === 'assistant'"
-                  [class.rounded-ds-lg]="message.role === 'assistant'"
                 >
                   <p class="text-body-sm whitespace-pre-wrap">{{ message.content }}</p>
                 </div>

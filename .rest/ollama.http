@@ -6,7 +6,7 @@ Connection: keep-alive
 {
   "model": "qwen3:8b",
   "stream": false,
-  "prompt": "What is your model name and version ?"
+  "prompt": "What is your model name ? Did you support tool calling ?"
 }
 
 HTTP/1.1 200  - OK
@@ -16,6 +16,12 @@ content-length: 53
 ###
 # list all models
 GET http://localhost:11434/api/tags
+
+HTTP/1.1 200  - OK
+content-type: application/json; charset=utf-8
+date: Thu, 29 Oct 2026 08:31:03 GMT
+connection: close
+transfer-encoding: chunked
 ###
 # list running models
 GET http://localhost:11434/api/ps

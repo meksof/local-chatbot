@@ -1,9 +1,10 @@
 ## Features
 
 The app will have the following features:
-- Chat interface including message input and display current conversation
-- Chat history on a sidebar with the ability to switch between conversations
-- Support for multiple models and model switching
+- [x] Chat interface including message input and display current conversation
+- [x] Chat history on a sidebar with the ability to switch between conversations
+- [x] Support for multiple models and model switching
+- [ ] Support for web search and fetching relevant pages from the web. see `docs/features/web-search.md` for more details.
 
 ## Rules
 
