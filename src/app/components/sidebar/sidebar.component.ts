@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ConversationService } from '../../services/conversation.service';
+import { APP_VERSION } from '../../app-version.token';
 
 @Component({
   selector: 'app-sidebar',
@@ -54,12 +55,18 @@ import { ConversationService } from '../../services/conversation.service';
           </div>
         }
       </div>
+
+      <!-- Footer: app version -->
+      <div class="p-4 border-t border-white/10 text-caption-sm text-on-dark-mute text-center">
+        v{{ version }}
+      </div>
     </div>
   `,
   styles: ``
 })
 export class SidebarComponent {
   conversationService = inject(ConversationService);
+  version = inject(APP_VERSION);
 
   newConversation(): void {
     const models = this.conversationService.models();
